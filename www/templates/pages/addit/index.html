@@ -1,12 +1,13 @@
 <ion-view view-title="Addit">
   <ion-content>
   	{{disp}} 
-  	<button class="button button-positive" >
+  	<button ng-click="getPhoto()" class="button button-positive" >
 		Add from Camera
 	</button>
 	<button  class="button button-positive">
 		Add from Photo Library 
 	</button>
+	photo library button doesn't work yet
 	<img ng-src="{{lastPhoto}}" style="max-width:100%">
 	test scope {{count}}
   </ion-content>
