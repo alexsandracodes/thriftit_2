@@ -1,26 +1,106 @@
 angular
 .module('starter')
-.controller("AddItController", function($scope, Camera) {
+.controller('AddItController', function($scope, $cordovaCamera, $cordovaFile) {
+  //this was modeled from example at http://devdactic.com/how-to-capture-and-store-images-with-ionic/
+  $scope.images = [];
 
-  $scope.getPhoto = function() {
-    Camera.getPicture().then(
-	//CameraSuccess (see documentation: https://github.com/apache/cordova-plugin-camera)
-     function(imageURI) {
-      console.log(imageURI);
-      $scope.lastPhoto = imageURI;
-    },
-    //cameraError
-     function(err) {
-      console.err(err);
-    }, 
-	//camera options
-    {
-      quality: 75,
-      targetWidth: 320,
-      targetHeight: 320,
-      sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
-      saveToPhotoAlbum: true
-    });
-  };
+$scope.addImage = function() {
+ // 2
+ var options = {
+ destinationType : Camera.DestinationType.FILE_URI,
+ sourceType : Camera.PictureSourceType.CAMERA, // Camera.PictureSourceType.PHOTOLIBRARY
+ allowEdit : false,
+ encodingType: Camera.EncodingType.JPEG,
+ popoverOptions: CameraPopoverOptions,
+ };
+ 
+ // 3
+ $cordovaCamera.getPicture(options).then(function(imageData) {
+ 
+ // 4
+ onImageSuccess(imageData);
+ 
+ function onImageSuccess(fileURI) {
+ createFileEntry(fileURI);
+ }
+ 
+ function createFileEntry(fileURI) {
+ window.resolveLocalFileSystemURL(fileURI, copyFile, fail);
+ }
+ 
+ // 5
+ function copyFile(fileEntry) {
+ var name = fileEntry.fullPath.substr(fileEntry.fullPath.lastIndexOf('/') + 1);
+ var newName = makeid() + name;
+ 
+ window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(fileSystem2) {
+ fileEntry.copyTo(
+ fileSystem2,
+ newName,
+ onCopySuccess,
+ fail
+ );
+ },
+ fail);
+ }
+ 
+ // 6
+ function onCopySuccess(entry) {
+ $scope.$apply(function () {
+ $scope.images.push(entry.nativeURL);
+ });
+ }
+ 
+ function fail(error) {
+ console.log("fail: " + error.code);
+ }
+ 
+ function makeid() {
+ var text = "";
+ var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+ 
+ for (var i=0; i < 5; i++) {
+ text += possible.charAt(Math.floor(Math.random() * possible.length));
+ }
+ return text;
+ }
+ 
+ }, function(err) {
+ console.log(err);
+ });
+}
+
+  $scope.urlForImage = function (imageName) {
+    console.log('get correct path for image');
+  }
 
 });
+
+//the following was commented out on 6.2.2015 when the code from http://devdactic.com/how-to-capture-and-store-images-with-ionic/ was used instead
+//the code is kept for future reference if it doesn't work. If the above method works, delete this.
+
+// .controller("AddItController", function($scope, $cordovaCamera) {
+
+
+
+//      var options = {
+//         quality: 50,
+//         destinationType: Camera.DestinationType.DATA_URL,
+//         sourceType: Camera.PictureSourceType.CAMERA,
+//         allowEdit: true,
+//         encodingType: Camera.EncodingType.JPEG,
+//         targetWidth: 100,
+//         targetHeight: 100,
+//         popoverOptions: CameraPopoverOptions,
+//         saveToPhotoAlbum: true
+//       };
+
+//     $cordovaCamera.getPicture(options).then(function(imageData) {
+//       // var image = document.getElementById('myImage');
+//       // image.src = "data:image/jpeg;base64," + imageData;
+//     }, function(err) {
+//       // error
+//     });
+
+
+// });
