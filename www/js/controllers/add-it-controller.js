@@ -2,37 +2,33 @@ angular
 .module('starter')
 .controller('AddItController', function($scope, $cordovaCapture, $cordovaActionSheet){
 
-    $scope.showActions = function() {
-      var options = {
-        title: 'What do you want with this image?',
-        buttonLabels: ['Share via Facebook', 'Share via Twitter'],
-        addCancelButtonWithLabel: 'Cancel',
-        androidEnableCancelButton : true,
-        winphoneEnableCancelButton : true,
-        addDestructiveButtonWithLabel : 'Delete it'
-      };
+    $scope.selectNumPhotos = function (numPhotos) {
+      console.log('numphotos is' + numPhotos)
 
-    document.addEventListener("deviceready", function () {
+      var options = { limit: parseInt(numPhotos) };
+      captureImage(options);
 
-      $cordovaActionSheet.show(options)
-        .then(function(btnIndex) {
-          var index = btnIndex;
+
+      function captureImage(options) {
+        // var options = { limit: 3 };
+
+        $cordovaCapture.captureImage(options).then(function(imageData) {
+          // Success! Image data is here
+          console.log('success in image capture');
+        }, function(err) {
+          // An error occurred. Show a message to the user
+          console.log('error in image capture');
         });
-    }, false);
+      }
+
+
+    
 
     }
 
-    $scope.captureImage = function() {
-      var options = { limit: 3 };
 
-      $cordovaCapture.captureImage(options).then(function(imageData) {
-        // Success! Image data is here
-        console.log('success in image capture');
-      }, function(err) {
-        // An error occurred. Show a message to the user
-        console.log('error in image capture');
-      });
-    }
+
+
 
   }
 );
