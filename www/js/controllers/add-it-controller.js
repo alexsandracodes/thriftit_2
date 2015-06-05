@@ -2,13 +2,22 @@ angular
 .module('starter')
 .controller('AddItController', function($scope, $cordovaCapture, $cordovaActionSheet){
 
+    $scope.selectCamera = function () {
+      $scope.pickCamera=true;
+      console.log('cchanged ngshow var')
+    }
+
+    $scope.pickCamera=false;
+        console.log('add from camera button was selected? ' + $scope.pickCamera);
+
+    //this event is fired when the "add from camera" option is selected and then a number of photos to take is selected
     $scope.selectNumPhotos = function (numPhotos) {
       console.log('numphotos is' + numPhotos)
-
+      //assign the options based on user input
       var options = { limit: parseInt(numPhotos) };
       captureImage(options);
 
-
+      //open camera to take the photos
       function captureImage(options) {
         // var options = { limit: 3 };
 
@@ -21,7 +30,8 @@ angular
         });
       }
 
-
+      //changed the template back to default of showing add from camera
+      $scope.pickCamera=false;
     
 
     }

@@ -2,37 +2,31 @@
   <ion-content>
   	{{disp}} 
 
-
-  	<div class="bar bar-header bar-dark">
-	  <h1 class="title">How many photos will you take?</h1>
-	</div> <br/><br/>
-  	<div class="list">
-
-	  <label class="item item-input item-select">
-	    <div class="input-label">
-	    	Select # of photos:
-	    </div>
-	    <form >
-		    <select ng-change='selectNumPhotos(numPhotos)' ng-model="numPhotos"  required>
-		    	<!--used shaping up with angular slides from codeschool for ^^ -->
-		      <option  value='1'  selected>1 photo</option>
-		      <option  value='2' >2 photos</option>
-		      <option  value='3' >3 photos</option>
-		      <option  value='4' >4 photos</option>
-		      <option  value='5' >5 photos</option>
-		      <option  value='6' >6 photos</option>
-		      <option  value='7' >7 photos</option>
-		      <option  value='8' >8 photos</option>
-		    </select>
-		</form>
-	  </label>
-
-	</div>
 	<div class="list card">
 
-	  <a href="#" class="item item-icon-left">
-	    <i class="icon ion-android-camera"></i>
-	    Add items from Camera
+	  <a href='#' class='item item-icon-left'>
+	    <i class='icon ion-android-camera'></i>
+	    <div ng-hide='pickCamera' ng-click='selectCamera()'>Add items from Camera </div>
+		<div ng-show='pickCamera' ng-click='selectCamera()'>
+			 <label class="item item-input item-select">
+			    <div class="input-label">
+			    	How many?
+			    </div>
+			    <form >
+				    <select ng-change='selectNumPhotos(numPhotos)' ng-model="numPhotos"  required>
+				    	<!--used shaping up with angular slides from codeschool for ^^ -->
+				      <option  value='1'  selected>1 photo</option>
+				      <option  value='2' >2 photos</option>
+				      <option  value='3' >3 photos</option>
+				      <option  value='4' >4 photos</option>
+				      <option  value='5' >5 photos</option>
+				      <option  value='6' >6 photos</option>
+				      <option  value='7' >7 photos</option>
+				      <option  value='8' >8 photos</option>
+				    </select>
+				</form>
+			  </label>
+		</div>
 	  </a>
 
 	  <a href="#" class="item item-icon-left">
