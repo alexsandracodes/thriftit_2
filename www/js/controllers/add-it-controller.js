@@ -1,14 +1,15 @@
 angular
 .module('starter')
-.controller('AddItController', function($scope, $cordovaCapture, $cordovaActionSheet){
+.controller('AddItController', function($scope, $cordovaCapture, $cordovaActionSheet, Items){
+
+    $scope.items = Items;
+    $scope.pickCamera=false;
+    console.log('add from camera button was selected? ' + $scope.pickCamera);
 
     $scope.selectCamera = function () {
       $scope.pickCamera=true;
       console.log('cchanged ngshow var')
     }
-
-    $scope.pickCamera=false;
-        console.log('add from camera button was selected? ' + $scope.pickCamera);
 
     //this event is fired when the "add from camera" option is selected and then a number of photos to take is selected
     $scope.selectNumPhotos = function (numPhotos) {
@@ -16,11 +17,9 @@ angular
       //assign the options based on user input
       var options = { limit: parseInt(numPhotos) };
       captureImage(options);
-
+      addItem();
       //open camera to take the photos
       function captureImage(options) {
-        // var options = { limit: 3 };
-
         $cordovaCapture.captureImage(options).then(function(imageData) {
           // Success! Image data is here
           console.log('success in image capture');
@@ -30,13 +29,19 @@ angular
         });
       }
 
+      function addItem(){
+        $scope.items.$save({
+          // 'description': description,
+          'image': 'testimageurl'
+          // 'price': price,
+          // 'seller': sellername
+        });
+        console.log('added item to Firebase');
+      }
       //changed the template back to default of showing add from camera
       $scope.pickCamera=false;
-    
 
     }
-
-
 
 
 
