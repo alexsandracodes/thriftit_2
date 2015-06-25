@@ -57,6 +57,16 @@ angular.module('starter', ['ionic','firebase','ngCordova'])
         controller: 'AddItController'
       }
     }
+  })
+
+  .state('app.edit', {
+    url: "/addit/edit",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/pages/addit/editphotos.html"
+        // controller: 'EditItController'
+      }
+    }
   });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/search');
