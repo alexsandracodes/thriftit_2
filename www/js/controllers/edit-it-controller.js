@@ -1,5 +1,7 @@
 angular
 .module('starter')
-.controller('EditItController', function($scope){
+.controller('EditPicsController', function($scope){
+
+	$scope.message='in edit page controller';
 
 });

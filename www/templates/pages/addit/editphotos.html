@@ -1,8 +1,15 @@
-<ion-view view-title="Edit">
+<ion-view view-title='Edit'>
   <ion-content>
-    <div class="bar bar-header item-input-inset">
+    <div class='bar bar-header item-input-inset'>
 
     	edit photos here
+
+	</div>
+	<div ng-click='showmessage()'> 
+		<!-- A test button to use adding a simple message to mongoDB -->
+		<button ng-click="go()" href='/submitted' class='button button-positive' >
+		  test-mongodb
+		</button>
 	</div>
   </ion-content>
 </ion-view>

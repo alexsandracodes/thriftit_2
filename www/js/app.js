@@ -63,8 +63,17 @@ angular.module('starter', ['ionic','firebase','ngCordova'])
     url: "/addit/edit",
     views: {
       'menuContent': {
-        templateUrl: "templates/pages/addit/editphotos.html"
-        // controller: 'EditItController'
+        templateUrl: "templates/pages/addit/editphotos.html",
+        controller: 'EditPicsController'
+      }
+    }
+  })
+  .state('app.submitted', {
+    url: "/addit/edit/submitted",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/pages/addit/editphotos.html",
+        controller: 'EditPicsController'
       }
     }
   });
